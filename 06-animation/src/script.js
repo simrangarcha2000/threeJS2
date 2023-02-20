@@ -31,13 +31,22 @@ renderer.setSize(sizes.width, sizes.height)
 //renderer.render(scene, camera)
 
 
+
+//Time 
+
+let time = Date.now()
+
+
 //Animation
 const tick =  () => 
 {
 
-    console.log('tick') //to check how fact the fps is
+    const currentTime = Date.now()
+    const deltaTime =  currentTime - time
+    time = currentTime
 
-    mesh.position.x += 0.01;
+
+    mesh.position.x += 0.0001 * deltaTime; 
     renderer.render(scene,camera)
 
 
