@@ -9,8 +9,8 @@ const canvas = document.querySelector('canvas.webgl')
 
 // Sizes
 const sizes = {
-    width: 800,
-    height: 600
+    width: window.innerWidth,
+    height: window.innerHeight
 }
 
 // Scene
@@ -24,17 +24,6 @@ const mesh = new THREE.Mesh(
 scene.add(mesh)
 
 
-const cursor = {
-    x: 0,
-    y:0 
-}
-
-window.addEventListener('mouseover', (event)=>{
-    cursor.x = event.clientX / sizes.width - 0.5,
-    cursor.y = -(event.clientY / sizes.height - 0.5)
-
-    console.log(cursor.x, cursor.y)
-})
 
 // Camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
@@ -58,6 +47,21 @@ renderer.setSize(sizes.width, sizes.height)
 // Animate
 const clock = new THREE.Clock()
 
+
+window.addEventListener('resize', () =>{
+    //Update sizes
+    console.log('window resized')
+    sizes.width =  window.innerWidth
+    sizes.height = window.innerHeight
+
+    //Update camera
+
+    camera.aspect = sizes.width/sizes.height;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(sizes.width,sizes.height)
+})
+
 const tick = () =>
 {
     /*const elapsedTime = clock.getElapsedTime()
@@ -72,6 +76,7 @@ const tick = () =>
 
     // Render
     renderer.render(scene, camera)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
     // Call tick again on the next frame
     window.requestAnimationFrame(tick)
