@@ -62,6 +62,18 @@ window.addEventListener('resize', () =>{
     renderer.setSize(sizes.width,sizes.height)
 })
 
+
+window.addEventListener('dbclick', () => {
+    if (!document.fullScreenElement)
+    {
+        console.log('go full')
+        canvas.requestFullscreen
+    }
+    else{
+        document.exitFullscreen()
+    }
+})
+
 const tick = () =>
 {
     /*const elapsedTime = clock.getElapsedTime()
