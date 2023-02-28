@@ -2,11 +2,26 @@
 import * as THREE from 'three'
 
 
+//*TODO:                        INITIATION
+
+
+const sizes = {
+    width : window.innerWidth,
+    height: window.innerHeight
+}
+
+const clock = new THREE.Clock()
+
+
+
+
+
 
 //*TODO:                        CANVAS
 
 
 const canvas = document.querySelector('canvas.webgl')
+
 
 
 //*TODO:                        SCENE
@@ -29,11 +44,11 @@ scene.add(mesh)
 
 
 const cube1 = new THREE.Mesh(new THREE.BoxGeometry(1,1,1), new THREE.MeshBasicMaterial({
-    color: "red"
+    color: "#a68939"
 }))
 
 const cube2 = new THREE.Mesh(new THREE.BoxGeometry(1,1,1), new THREE.MeshBasicMaterial({
-    color: "red"
+    color: "#f65891"
 }))
 
 cube1.position.y = 2
@@ -54,11 +69,6 @@ group.rotation.set(7,4,5)
 //*TODO:                        CAMERA
 
 
-const sizes = {
-    width : window.innerWidth,
-    height: window.innerHeight
-}
-
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
 camera.position.z = 5
 
@@ -76,4 +86,34 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height)
 
 
-renderer.render(scene,camera)
+
+
+
+
+//!                              ANIMATION 
+
+
+/**
+ * 
+ *     1- define clock 
+ *      2- Create func
+ *       3- elapsed time
+ *       4 - add to position
+ *       5 Render
+ *      6 Requestframe
+ *      7 - call Function
+ * 
+ */
+
+
+const tick = () => {
+
+    const elapsedTime = clock.getElapsedTime()
+    mesh.position.x = Math.sin(elapsedTime)
+    cube1.scale.x = Math.cos(elapsedTime)
+    cube2.scale.x = Math.sin(elapsedTime)
+    group.position.x = Math.sin(elapsedTime)
+    renderer.render(scene,camera);
+    window.requestAnimationFrame(tick)
+}
+tick()
